@@ -35,7 +35,7 @@ env:
   # You can modify the REPO_NAME to any name you want, but remember not to let it have the same name in 
   # other workflows.
   REPO_NAME: Linksys WRT1900ACSv2 OpenWRT Or.
-  REPO_URL: https://github.com/openwrt/openwrt.git
+  REPO_URL: https://github.com/Lienol/openwrt.git
   REPO_BRANCH: main
   BUILD_DEPENDS:  "ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \
                    bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \
