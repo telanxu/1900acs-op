@@ -1,0 +1,295 @@
+
+config dnsmasq
+	option domainneeded '1'
+	option boguspriv '1'
+	option filterwin2k '0'
+	option localise_queries '1'
+	option rebind_protection '1'
+	option rebind_localhost '1'
+	option local '/lan/'
+	option domain 'lan'
+	option expandhosts '1'
+	option nonegcache '0'
+	option cachesize '1000'
+	option authoritative '1'
+	option readethers '1'
+	option leasefile '/tmp/dhcp.leases'
+	option resolvfile '/tmp/resolv.conf.d/resolv.conf.auto'
+	option nonwildcard '1'
+	option localservice '1'
+	option ednspacket_max '1232'
+	option filter_aaaa '0'
+	option filter_a '0'
+	option filter_https '1'
+	option filter_unknown '1'
+	option localuse '1'
+	option noresolv '0'
+
+config dhcp 'lan'
+	option interface 'lan'
+	option start '100'
+	option limit '150'
+	option leasetime '12h'
+	option dhcpv4 'server'
+	option dhcpv6 'server'
+	option ra 'server'
+	option ra_slaac '1'
+	list ra_flags 'managed-config'
+	list ra_flags 'other-config'
+	option ra_management '1'
+	option ra_default '1'
+
+config dhcp 'wan'
+	option interface 'wan'
+	option ignore '1'
+
+config odhcpd 'odhcpd'
+	option maindhcp '0'
+	option leasefile '/tmp/hosts/odhcpd'
+	option leasetrigger '/usr/sbin/odhcpd-update'
+	option loglevel '4'
+
+config srvhost
+	option srv '_vlmcs._tcp'
+	option target 'router'
+	option port '1688'
+	option class '0'
+	option weight '100'
+
+config host
+	option name 'Peacefair-Energy-Monitor'
+	option dns '1'
+	option mac 'F4:CF:A2:F7:6A:DE'
+	option ip '192.168.1.246'
+	option leasetime 'infinite'
+
+config host
+	option name 'EZVIZ-Camera-C6'
+	option dns '1'
+	option mac '4C:F5:DC:D3:74:61'
+	option ip '192.168.1.221'
+	option leasetime 'infinite'
+
+config host
+	option name 'Yeelink-Panel-Light'
+	option dns '1'
+	option ip '192.168.1.101'
+	option leasetime 'infinite'
+	option mac '64:90:C1:9C:7E:C4'
+
+config host
+	option name 'XiaoMi-Gateway'
+	option dns '1'
+	option mac '7C:49:EB:AD:97:CA'
+	option ip '192.168.1.114'
+	option leasetime 'infinite'
+
+config host
+	option name 'UnRaid'
+	option dns '1'
+	option mac '1C:1B:0D:04:85:DA'
+	option ip '192.168.1.207'
+	option leasetime 'infinite'
+
+config host
+	option name 'Synology'
+	option dns '1'
+	option ip '192.168.1.210'
+	option leasetime 'infinite'
+	option mac '02:11:32:25:32:8B'
+
+config host
+	option name 'Ubuntu'
+	option dns '1'
+	option mac '52:54:00:7c:30:db'
+	option ip '192.168.1.190'
+	option leasetime 'infinite'
+
+config host
+	option name 'Yeelink-Fan-Lamp'
+	option dns '1'
+	option mac '64:90:C1:88:13:23'
+	option ip '192.168.1.247'
+	option leasetime 'infinite'
+
+config host
+	option name 'AC-Partner-MstrRm'
+	option dns '1'
+	option mac '04:CF:8C:F2:12:C3'
+	option ip '192.168.1.218'
+	option leasetime 'infinite'
+
+config host
+	option name 'AC-Partner-GustRm'
+	option dns '1'
+	option mac '04:CF:8C:F2:18:64'
+	option ip '192.168.1.117'
+	option leasetime 'infinite'
+
+config host
+	option name 'HomePod-Mini'
+	option dns '1'
+	option mac 'F4:34:F0:72:91:BC'
+	option ip '192.168.1.229'
+	option leasetime 'infinite'
+
+config host
+	option name 'Yunmi-Kettle'
+	option dns '1'
+	option mac '44:23:7C:5A:58:6C'
+	option ip '192.168.1.118'
+	option leasetime 'infinite'
+
+config host
+	option name 'Philip-Read-Write-Lamp'
+	option dns '1'
+	option mac '64:90:C1:D4:2A:4E'
+	option ip '192.168.1.248'
+	option leasetime 'infinite'
+
+config host
+	option name 'Tmall-Genie'
+	option dns '1'
+	option mac '38:D2:CA:C1:10:75'
+	option ip '192.168.1.228'
+	option leasetime 'infinite'
+
+config host
+	option name 'Jeremy-iPhone-12PM'
+	option dns '1'
+	option mac '26:09:42:00:6D:65'
+	option ip '192.168.1.223'
+	option leasetime 'infinite'
+
+config host
+	option name 'XiaoAi-Sound-Box'
+	option dns '1'
+	option mac '5C:02:14:1B:D2:77'
+	option ip '192.168.1.154'
+	option leasetime 'infinite'
+
+config host
+	option name 'BroadLink-RMPro'
+	option dns '1'
+	option mac 'B4:43:0D:C7:41:DC'
+	option ip '192.168.1.124'
+	option leasetime 'infinite'
+
+config host
+	option name 'MacBookAir-M1'
+	option dns '1'
+	option mac 'D4:57:63:D0:66:F9'
+	option ip '192.168.1.139'
+	option leasetime 'infinite'
+
+config host
+	option name 'HP-Laser-Printer'
+	option dns '1'
+	option mac '6C:02:E0:FD:13:C5'
+	option ip '192.168.1.199'
+	option leasetime 'infinite'
+
+config host
+	option name 'Aqara-Airer'
+	option dns '1'
+	option mac '40:31:3C:BC:EC:E2'
+	option ip '192.168.1.231'
+	option leasetime 'infinite'
+
+config host
+	option name 'Yeelink-Cooler-Fan'
+	option dns '1'
+	option mac '5C:E5:0C:9C:75:AD'
+	option ip '192.168.1.141'
+	option leasetime 'infinite'
+
+config host
+	option name 'Philip-Prime-Desk-Lamp'
+	option dns '1'
+	option mac '40:31:3C:E5:44:FC'
+	option ip '192.168.1.230'
+	option leasetime 'infinite'
+
+config host
+	option name 'Aqara-Gateway-M1S'
+	option dns '1'
+	option mac '54:EF:44:CA:23:BD'
+	option ip '192.168.1.103'
+	option leasetime 'infinite'
+
+config host
+	option name 'Rinnai-Heater'
+	option dns '1'
+	option mac '98:D8:63:BD:1C:54'
+	option ip '192.168.1.240'
+	option leasetime 'infinite'
+
+config host
+	option name 'Phicomm-N1'
+	option dns '1'
+	option mac 'FC:7C:02:8C:B3:EF'
+	option ip '192.168.1.226'
+	option leasetime 'infinite'
+
+config host
+	option name 'Phicomm-M1-GustRm'
+	option dns '1'
+	option mac 'B0:F8:93:24:54:7D'
+	option ip '192.168.1.180'
+	option leasetime 'infinite'
+
+config host
+	option name 'Phicomm-M1-MstrRm'
+	option dns '1'
+	option mac 'B0:F8:93:25:A9:2D'
+	option ip '192.168.1.170'
+	option leasetime 'infinite'
+
+config host
+	option name 'Bath-Remote'
+	option dns '1'
+	option mac '40:f5:20:05:b8:5c'
+	option ip '192.168.1.244'
+	option leasetime 'infinite'
+
+config host
+	option name 'Narwal-Clearner'
+	option dns '1'
+	option mac '18:93:7F:DB:77:1B'
+	option ip '192.168.1.211'
+	option leasetime 'infinite'
+
+config host
+	option name 'Shoes-Cabinet-Lamp'
+	option dns '1'
+	option mac 'c8:2b:96:2e:98:86'
+	option ip '192.168.1.113'
+	option leasetime 'infinite'
+
+config host
+	option name 'MiAiSoundbox-LX05'
+	option dns '1'
+	option mac '28:D1:27:A6:A5:2F'
+	option ip '192.168.1.178'
+	option leasetime 'infinite'
+
+config host
+	option name 'Baoli-Xiaomi-14'
+	option dns '1'
+	option mac '1a:c7:9a:17:db:47'
+	option ip '192.168.1.224'
+	option leasetime 'infinite'
+
+config host
+	option name 'Guilan-Oppo'
+	option dns '1'
+	option mac 'AC:73:52:0F:DF:DD'
+	option ip '192.168.1.249'
+	option leasetime 'infinite'
+
+config host
+	option name 'Ran-iPhone-15PM'
+	option dns '1'
+	option mac '98:0d:af:c8:c3:d2'
+	option ip '192.168.1.185'
+	option leasetime 'infinite'
