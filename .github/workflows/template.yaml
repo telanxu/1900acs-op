@@ -13,7 +13,7 @@
 #-------------------------------------------------------------------------------------------------------
 
 # Workflow name which is showed in GitHub Actions.
-name: Build Example-Firmware for Example-Device
+name: Build OpenWRT Firmware for Linksys WRT1900ACSv2
 
 on:
   workflow_dispatch:
@@ -34,7 +34,7 @@ env:
   # REPO means the OpenWrt repo you want to build from in this workflow. 
   # You can modify the REPO_NAME to any name you want, but remember not to let it have the same name in 
   # other workflows.
-  REPO_NAME: Linksys WRT1900ACSv2 OpenWRT Or.
+  REPO_NAME: Lienol's Repo
   REPO_URL: https://github.com/Lienol/openwrt.git
   REPO_BRANCH: main
   BUILD_DEPENDS:  "ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \
@@ -157,7 +157,10 @@ jobs:
           $GITHUB_WORKSPACE/$CUSTOM_SCRIPT_1
 
       - name: Update feeds
-        run: cd openwrt/ && ./scripts/feeds update -a && rm -rf feeds/packages/lang/golang && git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
+        run: |
+          cd openwrt/ && ./scripts/feeds update -a
+          rm -rf feeds/packages/lang/golang
+          git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
 
       - name: Install feeds
         run: cd openwrt/ && ./scripts/feeds install -a
