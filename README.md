@@ -1,37 +1,88 @@
-## Workflows for building OpenWrt firmware
+Build OpenWRT Firmware for Linksys WRT1900ACSv2
 
-This repository is improved base on **[P3TERX/Actions-OpenWrt](https://github.com/P3TERX/Actions-OpenWrt)**. Since the original repository has been archived and cannot submit PR, it is provided as a new repository.
+Repo.: Lienol's
+Branch: main
+Lan_IP: 192.168.1.1
+Acc.: root
+pswd.: password
 
-- - -
+# Build-in Apps
+luci-app-advancedreboot
+luci-app-arpbind
+luci-app-firewall [168.3 KB]
+luci-app-passwall2
+luci-app-openclash [only all dependencies, Main app not build-in]
+luci-app-hd-idle [381 KB]
+luci-app-socat [84.8 KB]
+luci-app-transmission [Tr: 2.3 MB]
+luci-app-ttyd [460 KB]
+luci-app-turboacc
+luci-app-iptvhelper [453 KiB]
+luci-app-udpxy [30.9 KB]
+luci-app-vlmcsd
+luci-app-watchcat [10 KB]
+luci-proto-wireguard; wireguard-tools,kmod-wireguard [109.8 KB]
+luci-app-wol [10 KB]
+luci-app-vsftpd
+luci-theme-argon
+[X] luci-app-*control*
+[X] luci-app-ksmbd/kmod ver.3.5.1/6.1.81
+[X] luci-app-ddns
+[X] luci-app-bypass
+[X] luci-app-rclone
+[X] luci-app-ssr-plus
 
-This project fixes some functional failures caused by the upgrade of GitHub permission system in the original project, and improves the function of automatic compilation of source code update. Workflows in this repository does not need additional tokens.
+# Addtional Build-in
+openssh-sftp-server [53.5 KB]
+zsh [1.84 MiB]
 
-**2023/2/16:** Fully refactored, solve a lot of old problems, improve safety and reliability.
+# Extending /overlay to /mnt/sdb1
+mount /dev/sda1 /overlay  # in fstab
 
-**2023/3/10:** Delete the feature of loading `feeds.conf.default`, because it is easy to inadvertently cause problems when compiling source code of non-default branch or hash. 
-               Specifically, feeds that depend on the source code of a particular branch or hash also need to specify a branch or hash. At this point, if we still use file overwriting to introduce custom feeds, we must be careful that the branch or hash information of the original base feed is overwritten and lost. 
-               Therefore, the alternative is to use `CUSTOM_SCRIPT_1` to modify the `feeds.conf.default`. Please check the comments in `example-custom-script-1.sh` for details.
+# opkg and feeds modification
+vi /etc/opkg.conf 
+# option check_signature
 
-- - -
+vi /etc/opkg/distfeeds.conf
+src/gz kiddin9 https://dl.openwrt.ai/latest/packages/arm_cortex-a9_vfpv3-d16/kiddin9
+src/gz luci https://dl.openwrt.ai/latest/packages/arm_cortex-a9_vfpv3-d16/luci
+src/gz base https://dl.openwrt.ai/latest/packages/arm_cortex-a9_vfpv3-d16/base
+src/gz packages https://dl.openwrt.ai/latest/packages/arm_cortex-a9_vfpv3-d16/packages
+src/gz routing https://dl.openwrt.ai/latest/packages/arm_cortex-a9_vfpv3-d16/routing
+src/gz telephony https://dl.openwrt.ai/latest/packages/arm_cortex-a9_vfpv3-d16/telephony
 
-### Usage:
+cat /usr/lib/opkg/status
+sed -i 's/a1ab2a9bcf9f21fac4fa28fd0375ed28/7e9d72c9afec89ed924865cc82184791/' /usr/lib/opkg/status
 
-1. Generate your workflow repo from this repository, and generate workflow file from `template.yaml`. You can rename the copy of `template.yaml` to any name you want, but remember that the file extension must be `.yaml` or `.yml`. 
+# Manually installed apps
+luci-app-openclash [5.7 MiB]
+luci-app-vssr-plus
+luci-app-samba4 [10 MiB]
+luci-app-adguardhome
+luci-app-ddns-go [3.47 MiB]
+luci-app-docker [192.48 MiB, Docker: 11.1 MB; Dockerd: 58.1 MB]
+luci-app-dockerman
+luci-app-diskman
+luci-app-istorex
+luci-app-lucky [Docker]
+luci-app-xteve [4.7 KiB] [Docker]
+Transmission-Web-Control [4.5 MiB]
+# Dependencies for Openclash & Passwall2
+haproxy [1.05 MiB]
+Xray-Core [9.10 MiB]
+hysteria [5.2 MiB]
+sing-box [24.91 MiB]
 
-2. In your workflow file, modify the content according to the annotations.  
-3. Then you can startup the workflow manually or regularly. 
-   + Select the workflow name on the Actions page to run it manually.
-   + For run regularly, you need to uncomment:
-     ```
-     schedule:
-       - cron: 0 */18 * * *
-     ```
-     There you can use your own cron expression to start the workflow as needed.
+# Personalize Settings in /files folder
+files/etc/config
+  dhcp
+  firewall
+  network
+  wireless
 
-Each time this workflow runs, it will check whether the specified repository is updated. If the source code is updated, it will start compiling the new firmware.  
-Whether the workflow is started manually or regularly, the compilation will only be triggered when the source code is updated. However, during manual startup, you can force firmware compilation by entering `true` in `Build new firmware anyway`.
+# files/etc/uci-defaults/
+#   99-custom
 
-- - -
+# files/root/.ssh
+#   authorized_keys
 
-### Copyright:
-MIT Licence © 2022~2023 Curious <https://curious.host>  
