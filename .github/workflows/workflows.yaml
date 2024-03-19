@@ -46,13 +46,13 @@ env:
                    uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev clang file nano aria2"
   # CONFIG_FILE is the name of your own config files for compiling, you should upload these files into the root 
   # directory of your workflow repo.
-  CONFIG_FILE: example.config
+  CONFIG_FILE: 1900acs.config
   # CUSTOM_SCRIPT_1 is the name of extra bash script you want to execute before feeds update&install.
   # CUSTOM_SCRIPT_2 is the name of extra bash script you want to execute after feeds update&install.
   # You can modify the initial settings of your firmware through these two scripts. If this is what you need,
   # please upload your scripts to the root directory of your workflow repo.
-  CUSTOM_SCRIPT_1: example-custom-script-1.sh
-  CUSTOM_SCRIPT_2: example-custom-script-2.sh
+  CUSTOM_SCRIPT_1: custom-script-1.sh
+  CUSTOM_SCRIPT_2: custom-script-2.sh
   # STORE_PRODUCTS determine whether to upload all compilation products to workflow artifacts.
   # Not only firmwires, all compiled packages will be here, including compiled but not solidified into firmware.
   STORE_PRODUCTS: false
@@ -159,11 +159,16 @@ jobs:
       - name: Update feeds
         run: |
           cd openwrt/ && ./scripts/feeds update -a
+          echo "upgrade golang ver.1.22+"
           rm -rf feeds/packages/lang/golang
           git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
 
       - name: Install feeds
-        run: cd openwrt/ && ./scripts/feeds install -a
+        run: |
+          cd openwrt/ && ./scripts/feeds install -a
+#          echo "add upx and ucl to tools(Only applied for OpenWRT Or. Source)"
+#          mv package/feeds/kiddin9/upx tools
+#          mv package/feeds/kiddin9/ucl tools
 
       - name: Load custom configuration
         run: |
