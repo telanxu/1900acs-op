@@ -7,7 +7,7 @@ Acc.: root
 pswd.: password
 
 # Build-in Apps
-luci-app-advancedreboot
+```luci-app-advancedreboot
 luci-app-arpbind
 luci-app-firewall [168.3 KB]
 luci-app-passwall2
@@ -30,7 +30,7 @@ luci-theme-argon
 [X] luci-app-ddns
 [X] luci-app-bypass
 [X] luci-app-rclone
-[X] luci-app-ssr-plus
+[X] luci-app-ssr-plus```
 
 # Addtional Build-in
 openssh-sftp-server [53.5 KB]
