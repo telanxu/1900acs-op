@@ -13,7 +13,7 @@
 #-------------------------------------------------------------------------------------------------------
 
 # Workflow name which is showed in GitHub Actions.
-name: Build OpenWRT Firmware for Linksys WRT1900ACSv2
+name: Build Lienol's OpenWRT Firmware
 
 on:
   workflow_dispatch:
