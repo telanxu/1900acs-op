@@ -1,19 +1,5 @@
-#
-# Copyright (c) 2022-2023 Curious <https://www.curious.host>
-#
-# This is free software, licensed under the MIT License.
-# See /LICENSE for more information.
-# 
-# https://github.com/Curious-r/OpenWrtBuildWorkflows
-# Description: Automatically check OpenWrt source code update and build it. No additional keys are 
-# required.
-#
-# Some features come from https://github.com/P3TERX/Actions-OpenWrt, visit the repository to get its 
-# copyright information.
-#-------------------------------------------------------------------------------------------------------
-
 # Workflow name which is showed in GitHub Actions.
-name: Build Official OpenWRT Firmware
+name: Official OpenWRT FW
 
 on:
   workflow_dispatch:
@@ -34,16 +20,9 @@ env:
   # REPO means the OpenWrt repo you want to build from in this workflow. 
   # You can modify the REPO_NAME to any name you want, but remember not to let it have the same name in 
   # other workflows.
-  REPO_NAME: OpenWRT Or
+  REPO_NAME: Official OpenWRT
   REPO_URL: https://github.com/openwrt/openwrt.git
   REPO_BRANCH: v23.05.3
-  BUILD_DEPENDS:  "ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \
-                   bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \
-                   git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libfuse-dev libglib2.0-dev libgmp3-dev \
-                   libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libpython3-dev libreadline-dev \
-                   libssl-dev libtool lrzsz mkisofs msmtp ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 \
-                   python3-pyelftools python3-setuptools qemu-utils rsync scons squashfs-tools subversion swig texinfo \
-                   uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev clang file nano aria2"
   # CONFIG_FILE is the name of your own config files for compiling, you should upload these files into the root 
   # directory of your workflow repo.
   CONFIG_FILE: 1900acs.config
@@ -53,11 +32,12 @@ env:
   # please upload your scripts to the root directory of your workflow repo.
   CUSTOM_SCRIPT_1: custom-script-1.sh
   CUSTOM_SCRIPT_2: custom-script-2.sh
+  CACHE_TOOLCHAIN: true
   # STORE_PRODUCTS determine whether to upload all compilation products to workflow artifacts.
   # Not only firmwires, all compiled packages will be here, including compiled but not solidified into firmware.
   STORE_PRODUCTS: false
   # STORE_FIRMWARE determine whether to upload firmwares to workflow artifacts.
-  STORE_FIRMWARE: true
+  STORE_FIRMWARE: false
   # The following are options of where the firmware needs to be transfered. 
   COWTRANSFER_FIRMWARE: false
   WETRANSFER_FIRMWARE: false
@@ -68,7 +48,7 @@ env:
 jobs:
   check:
     name: Check for source code updates
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       cache-hit: ${{ steps.cache-hash.outputs.cache-hit }}
 
@@ -94,7 +74,7 @@ jobs:
 
   build:
     name: Build firmware
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: check
     permissions:
       contents: write
@@ -115,10 +95,7 @@ jobs:
           echo -e "$(sudo lshw -short -C memory | grep GiB)\n"
           echo "--------------------------硬盘信息--------------------------"
           echo "硬盘数量: $(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT
-  
-      - name: Checkout
-        uses: actions/checkout@main
-
+ 
       - name: Free disk space
         uses: jlumbroso/free-disk-space@main
         with:
@@ -136,12 +113,14 @@ jobs:
         run: |
           sudo rm -rf /etc/apt/sources.list.d/*
           sudo -E apt-get -qq update
-          sudo -E apt-get -qq install $BUILD_DEPENDS
+          sudo -E apt-get -qq install $(curl -fsSL is.gd/depends_ubuntu_2204)
           sudo -E apt-get -qq autoremove --purge
           sudo -E apt-get -qq clean
           sudo timedatectl set-timezone $TIME_ZONE
           sudo mkdir -p /workdir/
           sudo chown $USER:$GROUPS /workdir/
+        
+      - uses: actions/checkout@main
 
       - name: Clone source code
         working-directory: /workdir
@@ -149,6 +128,12 @@ jobs:
           df -hT $PWD
           git clone --depth 1 --branch $REPO_BRANCH --single-branch $REPO_URL openwrt/
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+          
+      - name: cache
+        uses: stupidloud/cachewrtbuild@main
+        with:
+          ccache: 'true'
+          prefix: ${{ github.workspace }}/openwrt
 
       - name: Run custom-script-1
         run: |
@@ -191,6 +176,7 @@ jobs:
         id: download-packages
         run: |
           cd openwrt/
+          make defconfig > /dev/null 2>&1
           make download -j8
           find dl -size -1024c -exec ls -l {} \;
           find dl -size -1024c -exec rm -f {} \;
