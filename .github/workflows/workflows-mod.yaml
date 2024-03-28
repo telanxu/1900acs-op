@@ -1,5 +1,5 @@
 # Workflow name which is showed in GitHub Actions.
-name: Linksys WRT1900ACS v2
+name: Build Mod OpenWRT FW
 
 on:
   workflow_dispatch:
