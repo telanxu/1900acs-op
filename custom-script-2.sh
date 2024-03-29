@@ -24,7 +24,7 @@
 # sed -i 's/ssid=OpenWrt/ssid=AirPort/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
 # ttyd 自动登录
-# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${GITHUB_WORKSPACE}/openwrt/package/feeds/packages/ttyd/files/ttyd.config
+sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${GITHUB_WORKSPACE}/openwrt/package/feeds/packages/ttyd/files/ttyd.config
 
 # Change Host Name (Pure Numbers or Chinese)
 sed -i 's/OpenWrt/router/g' package/base-files/files/bin/config_generate
