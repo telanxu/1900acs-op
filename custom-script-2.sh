@@ -18,7 +18,7 @@
 #git apply example.patch
 
 # Modify WiFi ON
-# sed -i 's/disabled=1/disabled=0/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
+sed -i 's/disabled=1/disabled=0/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
 # Modify default SSID
 # sed -i 's/ssid=OpenWrt/ssid=AirPort/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
