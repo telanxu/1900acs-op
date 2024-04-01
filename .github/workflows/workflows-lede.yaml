@@ -1,5 +1,5 @@
 # Workflow name which is showed in GitHub Actions.
-name: Build Mod Lede FW
+name: Build Lede FW
 
 on:
   workflow_dispatch:
