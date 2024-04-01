@@ -154,6 +154,7 @@ jobs:
         run: |
           cd openwrt/ && ./scripts/feeds install -a
           echo "add upx and ucl to tools(Only needed for OpenWRT Or. Source)"
+          git clone https://github.com/telanxu/op-tools tools
 
       - name: Load custom configuration
         run: |
