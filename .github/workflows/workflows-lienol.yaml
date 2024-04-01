@@ -22,7 +22,7 @@ env:
   # other workflows.
   REPO_NAME: Lienol OpenWRT
   REPO_URL: https://github.com/Lienol/openwrt
-  REPO_BRANCH: 23.05
+  REPO_BRANCH: 22.03
   # CONFIG_FILE is the name of your own config files for compiling, you should upload these files into the root 
   # directory of your workflow repo.
   CONFIG_FILE: lienol.config
