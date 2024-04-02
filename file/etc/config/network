@@ -1,0 +1,66 @@
+
+config interface 'loopback'
+	option device 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+	option ula_prefix 'fda2:5deb:d76c::/48'
+
+config device
+	option name 'br-lan'
+	option type 'bridge'
+	list ports 'lan1'
+	list ports 'lan2'
+	list ports 'lan3'
+	list ports 'lan4'
+
+config interface 'lan'
+	option device 'br-lan'
+	option proto 'static'
+	option ipaddr '192.168.1.1'
+	option netmask '255.255.255.0'
+	option ip6assign '64'
+
+config device
+	option name 'wan'
+	option macaddr '62:38:e0:10:4d:d7'
+
+config interface 'wan'
+	option device 'wan'
+	option proto 'pppoe'
+	option username '221010131357'
+	option password '318042'
+	option ipv6 'auto'
+
+config interface 'wan6'
+	option device 'wan'
+	option proto 'dhcpv6'
+
+config interface 'wg0'
+	option proto 'wireguard'
+	option private_key '+BjGMnvVAIwvURfkfdAZ6wk96zJ2V+3+nba70HnvbF4='
+	option listen_port '9473'
+	list addresses '10.1.1.1/24'
+
+config wireguard_wg0
+	option description 'iOS'
+	option public_key 'oLIGeJogG7gO2eq1zlofoUSiK9UFPiD1rsNpG+7wI1c='
+	option persistent_keepalive '25'
+	list allowed_ips '10.1.1.7/32'
+
+config interface 'utun'
+	option proto 'none'
+	option device 'utun'
+	option auto '0'
+
+config wireguard_wg0
+	option description 'mw4530r'
+	option public_key 'vtpzPfcIBFSCwX7DtWcOZnSIpSLnuWYp3z3rSRIgTQ8='
+	option endpoint_host 'rt.yich.me'
+	option endpoint_port '9473'
+	option persistent_keepalive '25'
+	list allowed_ips '192.168.2.0/24'
+	list allowed_ips '10.1.1.2/24'
+
