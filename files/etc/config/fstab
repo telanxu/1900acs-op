@@ -1,0 +1,19 @@
+
+config global
+	option anon_swap '0'
+	option anon_mount '1'
+	option auto_swap '1'
+	option auto_mount '1'
+	option delay_root '5'
+	option check_fs '0'
+
+config mount
+	option target '/mnt/sdb1'
+	option uuid '5778285f-afb2-be49-8573-c0387929bee8'
+	option enabled '1'
+
+config mount
+	option enabled '1'
+	option uuid 'cb07e873-a4b7-6041-a2ef-0201a5e3e6ea'
+	option target '/overlay'
+

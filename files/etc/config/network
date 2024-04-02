@@ -1,0 +1,36 @@
+
+config interface 'loopback'
+	option ifname 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+	option ula_prefix 'fddf:a492:9288::/48'
+
+config interface 'lan'
+	option type 'bridge'
+	option ifname 'lan1 lan2 lan3 lan4'
+	option proto 'static'
+	option ipaddr '192.168.1.1'
+	option netmask '255.255.255.0'
+	option ip6assign '60'
+
+config interface 'wan'
+    option ifname 'wan'
+    option _orig_ifname 'wan'
+    option _orig_bridge 'false'
+    option proto 'pppoe'
+    option username '221010131357'
+    option password '318042'
+    option ipv6 'auto'
+    option keepalive '0'
+
+config device 'wan_wan_dev'
+	option name 'wan'
+	option macaddr '62:38:e0:10:4d:d7'
+
+config interface 'wan6'
+	option ifname 'wan'
+	option proto 'dhcpv6'
+
