@@ -1,5 +1,5 @@
 # Workflow name which is showed in GitHub Actions.
-name: Build Lienol FW
+name: Build Immortal FW
 
 on:
   workflow_dispatch:
@@ -20,12 +20,12 @@ env:
   # REPO means the OpenWrt repo you want to build from in this workflow. 
   # You can modify the REPO_NAME to any name you want, but remember not to let it have the same name in 
   # other workflows.
-  REPO_NAME: Lienol OpenWRT
-  REPO_URL: https://github.com/Lienol/openwrt
-  REPO_BRANCH: 22.03
+  REPO_NAME: ImmortalWRT
+  REPO_URL: https://github.com/immortalwrt/immortalwrt
+  REPO_BRANCH: v23.05.2
   # CONFIG_FILE is the name of your own config files for compiling, you should upload these files into the root 
   # directory of your workflow repo.
-  CONFIG_FILE: lienol.config
+  CONFIG_FILE: immortal.config
   # CUSTOM_SCRIPT_1 is the name of extra bash script you want to execute before feeds update&install.
   # CUSTOM_SCRIPT_2 is the name of extra bash script you want to execute after feeds update&install.
   # You can modify the initial settings of your firmware through these two scripts. If this is what you need,
