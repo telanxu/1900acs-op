@@ -35,7 +35,7 @@ env:
   CACHE_TOOLCHAIN: true
   # STORE_PRODUCTS determine whether to upload all compilation products to workflow artifacts.
   # Not only firmwires, all compiled packages will be here, including compiled but not solidified into firmware.
-  STORE_PRODUCTS: false
+  STORE_PRODUCTS: true
   # STORE_FIRMWARE determine whether to upload firmwares to workflow artifacts.
   STORE_FIRMWARE: false
   # The following are options of where the firmware needs to be transfered. 
